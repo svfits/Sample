@@ -26,7 +26,7 @@ public class AuthorizeAttribute : Attribute, IAuthorizationFilter
 
         if (!_typeUsers.Contains(user.TypeUser))
         {
-            filterContext.Result = new ForbidResult();
+            filterContext.Result = new UnauthorizedResult();
             return;
         }
     }
