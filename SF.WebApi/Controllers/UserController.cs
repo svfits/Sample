@@ -57,14 +57,7 @@ public class UserController : ControllerBase
     [Authorize(TypeUser.Admin)]
     public async Task<ActionResult<int>> AddUser(UserRequest userRequest)
     {
-        try
-        {
-            var result = await _userService.AddUser(userRequest);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var result = await _userService.AddUser(userRequest);
+        return Ok(result);
     }
 }

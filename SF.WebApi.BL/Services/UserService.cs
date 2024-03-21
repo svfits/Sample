@@ -15,18 +15,11 @@ public interface IUserService
     Task<int> AddUser(UserRequest userRequest);
 }
 
-public class UserService : IUserService
+public class UserService(DataDbContext dataDbContext, IMapper mapper, ILogger<UserService> logger) : IUserService
 {
-    private readonly DataDbContext _dataDbContext;
-    private readonly IMapper _mapper;
-    private readonly ILogger<UserService> _logger;
-
-    public UserService(DataDbContext dataDbContext, IMapper mapper, ILogger<UserService> logger)
-    {
-        _dataDbContext = dataDbContext;
-        _mapper = mapper;
-        _logger = logger;
-    }
+    private readonly DataDbContext _dataDbContext = dataDbContext;
+    private readonly IMapper _mapper = mapper;
+    private readonly ILogger<UserService> _logger = logger;
 
     public async Task<List<UserResponse>> GetUsers()
     {
@@ -40,6 +33,8 @@ public class UserService : IUserService
 
     public async Task<int> AddUser(UserRequest userRequest)
     {
+        throw new NotImplementedException("Ошибка!!!");
+
         var userDb = _mapper.Map<User>(userRequest);
 
         await _dataDbContext.User.AddAsync(userDb);

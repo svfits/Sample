@@ -5,14 +5,9 @@ using SF.DAL;
 namespace SF.WebApi.BL.Atribute;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class AuthorizeAttribute : Attribute, IAuthorizationFilter
+public class AuthorizeAttribute(params TypeUser[] typeUsers) : Attribute, IAuthorizationFilter
 {
-    private readonly TypeUser[] _typeUsers;
-
-    public AuthorizeAttribute(params TypeUser[] typeUsers)
-    {
-        _typeUsers = typeUsers;
-    }
+    private readonly TypeUser[] _typeUsers = typeUsers;
 
     public void OnAuthorization(AuthorizationFilterContext filterContext)
     {

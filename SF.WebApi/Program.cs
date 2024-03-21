@@ -16,6 +16,10 @@ public class Program
 
         // Add services to the container.
 
+        builder.Services.AddProblemDetails();
+        builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
+        builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+        
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
@@ -69,6 +73,8 @@ public class Program
         builder.Services.AddAutoMapper(typeof(MapBL));
 
         var app = builder.Build();
+
+        app.UseExceptionHandler();
 
         app.UseSwagger();
         app.UseSwaggerUI();

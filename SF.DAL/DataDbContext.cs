@@ -2,12 +2,7 @@
 
 namespace SF.DAL;
 
-public class DataDbContext : DbContext
+public class DataDbContext(DbContextOptions<DataDbContext> opt) : DbContext(opt)
 {
-    public DataDbContext(DbContextOptions<DataDbContext> opt) : base(opt)
-    {
-            
-    }
-
     public DbSet<User> User { get; set; }
 }
