@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using System.ComponentModel.DataAnnotations;
 
-namespace SF.WebApi;
+namespace SF.WebApi.Middleware;
 
 public class ValidationExceptionHandler : IExceptionHandler
 {

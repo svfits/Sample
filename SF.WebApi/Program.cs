@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SF.DAL;
 using SF.WebApi.BL;
-using SF.WebApi.BL.Middleware;
 using SF.WebApi.BL.Services;
+using SF.WebApi.Middleware;
 
 namespace SF.WebApi;
 
@@ -58,7 +58,7 @@ public class Program
             foreach (string fileName in xmlFiles)
             {
                 string xmlFilePath = Path.Combine(AppContext.BaseDirectory, fileName);
-                if (System.IO.File.Exists(xmlFilePath))
+                if (File.Exists(xmlFilePath))
                     s.IncludeXmlComments(xmlFilePath, includeControllerXmlComments: true);
             }
         });
