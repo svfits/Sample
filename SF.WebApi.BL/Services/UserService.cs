@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using SF.DAL;
 using SF.WebApi.BL.Request;
 using SF.WebApi.BL.Response;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SF.WebApi.BL.Services;
 
@@ -33,8 +32,6 @@ public class UserService(DataDbContext dataDbContext, IMapper mapper, ILogger<Us
 
     public async Task<int> AddUser(UserRequest userRequest)
     {
-        throw new NotImplementedException("Ошибка!!!");
-
         var userDb = _mapper.Map<User>(userRequest);
 
         await _dataDbContext.User.AddAsync(userDb);

@@ -4,7 +4,7 @@ using SF.DAL;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace SF.WebApi.BL.Middleware;
+namespace SF.WebApi.Middleware;
 
 public class AuthMiddleWare
 {
