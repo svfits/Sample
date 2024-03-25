@@ -19,7 +19,7 @@ public class Program
         builder.Services.AddProblemDetails();
         builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
         builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-        
+
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
@@ -27,7 +27,7 @@ public class Program
         //в UI swagger добавляется меню авторизации
         builder.Services.AddSwaggerGen(s =>
         {
-            s.SwaggerDoc("v1", new OpenApiInfo { Title = "CarChargingStationMobile", Version = "v1" });            
+            s.SwaggerDoc("v1", new OpenApiInfo { Title = "CarChargingStationMobile", Version = "v1" });
             s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
@@ -54,7 +54,7 @@ public class Program
                     }
                 });
 
-            List<string> xmlFiles = Directory.GetFiles(AppContext.BaseDirectory, "*.xml", SearchOption.TopDirectoryOnly).ToList();
+            List<string> xmlFiles = [.. Directory.GetFiles(AppContext.BaseDirectory, "*.xml", SearchOption.TopDirectoryOnly)];
             foreach (string fileName in xmlFiles)
             {
                 string xmlFilePath = Path.Combine(AppContext.BaseDirectory, fileName);
@@ -66,6 +66,7 @@ public class Program
         builder.Services.AddTransient<IJwtService, JwtService>();
         builder.Services.AddTransient<IUserService, UserService>();
         builder.Services.AddTransient<IAuthService, AuthService>();
+        builder.Services.AddScoped<IScopedService, ScopedService>();
 
         ///Тут можно подключить любую БД
         builder.Services.AddDbContext<DataDbContext>(opt => opt.UseInMemoryDatabase("UseInMemoryDatabase"));
