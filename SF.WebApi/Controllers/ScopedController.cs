@@ -11,6 +11,7 @@ namespace SF.WebApi.Controllers;
 [Produces(MediaTypeNames.Application.Json)]
 public class ScopedController(IScopedService scopedService) : ControllerBase
 {
+
     /// <summary>
     /// Запуск scoped
     /// </summary>
