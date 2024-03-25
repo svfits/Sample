@@ -11,16 +11,8 @@ namespace SF.WebApi.Controllers;
 [Route("[controller]")]
 [Consumes(MediaTypeNames.Application.Json)]
 [Produces(MediaTypeNames.Application.Json)]
-public class AuthController : ControllerBase
+public class AuthController(IAuthService authService, ILogger<AuthController> logger) : ControllerBase
 {
-    private readonly IAuthService _authService;
-    private readonly ILogger<AuthController> _logger;
-
-    public AuthController(IAuthService authService, ILogger<AuthController> logger)
-    {
-        _authService = authService;
-        _logger = logger;
-    }
 
     /// <summary>
     /// Получить токен для авторизации
@@ -33,16 +25,16 @@ public class AuthController : ControllerBase
     [AllowAnonymous]
     public async Task<ActionResult<List<UserResponse>>> GetToken([FromBody] LoginRequest loginRequest)
     {
-        _logger.LogTrace("Поступили данные для авторизации {@loginRequest}", loginRequest);
+        logger.LogTrace("Поступили данные для авторизации {@loginRequest}", loginRequest);
 
         try
         {
-            var result = await _authService.GetToken(loginRequest);
+            var result = await authService.GetToken(loginRequest);
             return Ok(result);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Ошибка при авторизации {@login}", loginRequest);
+            logger.LogError(ex, "Ошибка при авторизации {@login}", loginRequest);
             return BadRequest(ex.Message);
         }
     }
