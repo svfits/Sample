@@ -1,10 +1,20 @@
-﻿namespace SF.ClientMessage
+﻿namespace SF.ClientMessage;
+
+internal class Program
 {
-    internal class Program
+    static async Task Main()
     {
-        static void Main(string[] args)
+        Console.WriteLine("Нажми на кнопку получишь результат!");
+        Console.ReadLine();
+
+        HttpClient client = new()
         {
-            Console.WriteLine("Hello, World!");
-        }
+            BaseAddress = new Uri("http://localhost:5194/")
+        };
+
+        var clientMessage = new Clients.ClientMessage(client);
+        await clientMessage.ScopedAsync();
+
+        Console.WriteLine("Hello, World!");
     }
 }
