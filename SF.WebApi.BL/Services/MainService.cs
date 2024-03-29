@@ -14,6 +14,7 @@ public class MainService : IMainService
         var query = list.Where(x => x >= i);
         i = 15;
         var result = query.ToList();
+        list.Clear();
 
         return result;
     }

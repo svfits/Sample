@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SF.WebApi.BL.Services.Tests;
 
