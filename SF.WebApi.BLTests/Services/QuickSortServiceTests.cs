@@ -11,7 +11,7 @@ public class QuickSortServiceTests
     {
         //arrange
         var quickSortService = new QuickSortService();
-        int[] numbers = { 1232, 22, 23, 43, 51, 63, 7, 85, 19, 101, 1122 };
+        int[] numbers = [1232, 22, 23, 43, 51, 63, 7, 85, 19, 101, 1122];
 
         //action
         var result = quickSortService.Start(numbers);
