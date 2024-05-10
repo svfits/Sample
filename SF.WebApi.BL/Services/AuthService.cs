@@ -9,16 +9,10 @@ public interface IAuthService
     Task<string> GetToken(LoginRequest loginRequest);
 }
 
-public class AuthService : IAuthService
+public class AuthService(IJwtService jwtService, DataDbContext dataDbContext) : IAuthService
 {
-    private readonly IJwtService _jwtService;
-    private readonly DataDbContext _dataDbContext;
-
-    public AuthService(IJwtService jwtService, DataDbContext dataDbContext)
-    {
-        _jwtService = jwtService;
-        _dataDbContext = dataDbContext;
-    }
+    private readonly IJwtService _jwtService = jwtService;
+    private readonly DataDbContext _dataDbContext = dataDbContext;
 
     public async Task<string> GetToken(LoginRequest loginRequest)
     {

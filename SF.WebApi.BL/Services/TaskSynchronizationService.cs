@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Threading;
 
 namespace SF.WebApi.BL.Services;
 
@@ -11,13 +10,13 @@ public class TaskSynchronizationService
 
     private static async Task StartIteration(int i)
     {
-        //await semaphor.WaitAsync();
+        await semaphor.WaitAsync();
 
         Debug.WriteLine(i);
         await Task.Delay(500);
         MyProperty *= i;
 
-        //semaphor.Release(); 
+        semaphor.Release(); 
     }
 
     public static void Run()

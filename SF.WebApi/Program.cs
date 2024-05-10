@@ -67,6 +67,7 @@ public class Program
         builder.Services.AddTransient<IUserService, UserService>();
         builder.Services.AddTransient<IAuthService, AuthService>();
         builder.Services.AddScoped<IScopedService, ScopedService>();
+        builder.Services.AddScoped<IKafkaService, KafkaService>();
 
         ///Тут можно подключить любую БД
         builder.Services.AddDbContext<DataDbContext>(opt => opt.UseInMemoryDatabase("UseInMemoryDatabase"));
