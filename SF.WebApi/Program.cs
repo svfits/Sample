@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SF.DAL;
+using SF.WebApi.BackgroundServices;
 using SF.WebApi.BL;
 using SF.WebApi.BL.Services;
 using SF.WebApi.Middleware;
@@ -63,13 +64,15 @@ public class Program
             }
         });
 
+        builder.Services.AddHostedService<KafkaConsumerHandler>();
+
         builder.Services.AddTransient<IJwtService, JwtService>();
         builder.Services.AddTransient<IUserService, UserService>();
         builder.Services.AddTransient<IAuthService, AuthService>();
         builder.Services.AddScoped<IScopedService, ScopedService>();
         builder.Services.AddScoped<IKafkaService, KafkaService>();
 
-        ///Тут можно подключить любую БД
+        //Тут можно подключить любую БД
         builder.Services.AddDbContext<DataDbContext>(opt => opt.UseInMemoryDatabase("UseInMemoryDatabase"));
 
         builder.Services.AddAutoMapper(typeof(MapBL));
