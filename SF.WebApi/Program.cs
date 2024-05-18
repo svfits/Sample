@@ -18,6 +18,8 @@ public class Program
         // Add services to the container.
 
         builder.Services.AddProblemDetails();
+
+        //глобальные обработчики ошибок
         builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
         builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 

@@ -3,8 +3,13 @@
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "sf.webapi",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
       "serviceActions": {
-        "sf.webapi": "StartDebugging"
+        "sf.webapi": "StartDebugging",
+        "kafka1": "StartWithoutDebugging",
+        "ui": "StartWithoutDebugging"
       }
     }
   }

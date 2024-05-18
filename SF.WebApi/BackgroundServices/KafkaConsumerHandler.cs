@@ -28,7 +28,9 @@ public class KafkaConsumerHandler(ILogger<KafkaConsumerHandler> logger) : IHoste
                 while (true)
                 {
                     var consumer = builder.Consume(cancelToken.Token);
-                    Console.WriteLine($"Message: {consumer.Message.Value} received from {consumer.TopicPartitionOffset}");
+                    //Console.WriteLine($"Message: {consumer.Message.Value} received from {consumer.TopicPartitionOffset}");
+
+                    System.Diagnostics.Debug.WriteLine($"Message: {consumer.Message.Value} received from {consumer.TopicPartitionOffset}");
                 }
             }
             catch (Exception)
