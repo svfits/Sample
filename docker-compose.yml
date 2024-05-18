@@ -6,11 +6,14 @@ volumes:
 services:
   sf.webapi:
     image: ${DOCKER_REGISTRY-}sfwebapi
+    restart: always
     ports:
-      - "8089:8081"
+      - "8089:8080"
     build:
       context: .
       dockerfile: SF.WebApi/Dockerfile
+    depends_on: 
+    - "kafka1"
 
   kafka1:
     image: 'bitnami/kafka:latest'

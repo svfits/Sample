@@ -1,17 +1,25 @@
 ﻿
 using Confluent.Kafka;
-using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace SF.WebApi.BackgroundServices;
 
-public class KafkaConsumerHandler(ILogger<KafkaConsumerHandler> logger) : IHostedService
+public class KafkaConsumerHandler(ILogger<KafkaConsumerHandler> logger) : IHostedService, IDisposable
 {
     private readonly string topic = "simpletalk_topic";
+    private readonly CancellationTokenSource _stoppingCts = new();
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
         logger.LogInformation("Должен работать сервис");
 
+        Task.Run(() => ExecuteAsync(_stoppingCts.Token));
+
+        return Task.CompletedTask;
+    }
+
+    private void ExecuteAsync(CancellationToken token)
+    {
         var conf = new ConsumerConfig
         {
             GroupId = "st_consumer_group",
@@ -19,31 +27,35 @@ public class KafkaConsumerHandler(ILogger<KafkaConsumerHandler> logger) : IHoste
             AutoOffsetReset = AutoOffsetReset.Earliest
         };
 
-        using (var builder = new ConsumerBuilder<Ignore, string>(conf).Build())
+        using var builder = new ConsumerBuilder<Ignore, string>(conf).Build();
+        builder.Subscribe(topic);
+        try
         {
-            builder.Subscribe(topic);
-            var cancelToken = new CancellationTokenSource();
-            try
+            while (true)
             {
-                while (true)
-                {
-                    var consumer = builder.Consume(cancelToken.Token);
-                    //Console.WriteLine($"Message: {consumer.Message.Value} received from {consumer.TopicPartitionOffset}");
-
-                    System.Diagnostics.Debug.WriteLine($"Message: {consumer.Message.Value} received from {consumer.TopicPartitionOffset}");
-                }
-            }
-            catch (Exception)
-            {
-                builder.Close();
+                var consumer = builder.Consume(token);
+                Debug.WriteLine($"Message: {consumer.Message.Value} received from {consumer.TopicPartitionOffset}");
             }
         }
-
-        return Task.CompletedTask;
+        catch (Exception)
+        {
+            builder.Close();
+        }
     }
 
-    public Task StopAsync(CancellationToken cancellationToken)
+    public virtual Task StopAsync(CancellationToken cancellationToken)
     {
+        try
+        {
+            // Signal cancellation to the executing method
+            _stoppingCts.Cancel();
+        }
+        finally
+        {
+            logger.LogInformation("Стоп приема от Kafka");
+        }
         return Task.CompletedTask;
     }
+
+    public virtual void Dispose() => _stoppingCts.Cancel();
 }
