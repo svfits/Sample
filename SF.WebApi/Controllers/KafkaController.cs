@@ -16,11 +16,10 @@ public class KafkaController(ILogger<KafkaController> logger, IKafkaService kafk
     /// <summary>
     /// Отправка в кафку строки
     /// </summary>
-    /// <example name="message">sdfsdf</example>
     /// <param name="message">Просто строка</param>
     /// <returns>Тут должна быть строка!</returns>
     [HttpPost]
-    public async Task<string> SendToKafka(string message)
+    public async Task<string> SendToKafka(string message = "message")
     {
         _logger.LogTrace("Поступили данные для Kafka {number}", message);
 
