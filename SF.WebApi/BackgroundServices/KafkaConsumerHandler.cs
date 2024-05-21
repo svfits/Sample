@@ -1,12 +1,12 @@
-﻿
-using Confluent.Kafka;
+﻿using Confluent.Kafka;
+using Microsoft.Extensions.Options;
+using SF.WebApi.BL.Options;
 using System.Diagnostics;
 
 namespace SF.WebApi.BackgroundServices;
 
-public class KafkaConsumerHandler(ILogger<KafkaConsumerHandler> logger) : IHostedService, IDisposable
+public class KafkaConsumerHandler(ILogger<KafkaConsumerHandler> logger, IOptions<KafkaConfig> kafkaOptions) : IHostedService, IDisposable
 {
-    private readonly string topic = "simpletalk_topic";
     private readonly CancellationTokenSource _stoppingCts = new();
 
     public Task StartAsync(CancellationToken cancellationToken)
@@ -22,13 +22,13 @@ public class KafkaConsumerHandler(ILogger<KafkaConsumerHandler> logger) : IHoste
     {
         var conf = new ConsumerConfig
         {
-            GroupId = "st_consumer_group",
-            BootstrapServers = "kafka1:9092",
+            GroupId = kafkaOptions.Value.GroupId,
+            BootstrapServers = kafkaOptions.Value.BootstrapServers,
             AutoOffsetReset = AutoOffsetReset.Earliest
         };
 
         using var builder = new ConsumerBuilder<Ignore, string>(conf).Build();
-        builder.Subscribe(topic);
+        builder.Subscribe(kafkaOptions.Value.Topic);
         try
         {
             while (true)

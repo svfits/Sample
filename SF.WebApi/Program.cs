@@ -4,8 +4,10 @@ using Microsoft.OpenApi.Models;
 using SF.DAL;
 using SF.WebApi.BackgroundServices;
 using SF.WebApi.BL;
+using SF.WebApi.BL.Options;
 using SF.WebApi.BL.Services;
 using SF.WebApi.Middleware;
+using System.Configuration;
 
 namespace SF.WebApi;
 
@@ -73,6 +75,8 @@ public class Program
         builder.Services.AddTransient<IAuthService, AuthService>();
         builder.Services.AddScoped<IScopedService, ScopedService>();
         builder.Services.AddScoped<IKafkaService, KafkaService>();
+                
+        builder.Services.Configure<KafkaConfig>(builder.Configuration.GetSection("KafkaConfig"));
 
         //Тут можно подключить любую БД
         builder.Services.AddDbContext<DataDbContext>(opt => opt.UseInMemoryDatabase("UseInMemoryDatabase"));
