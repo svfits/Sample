@@ -14,10 +14,10 @@ public class TasksService : ITasksService
 {
     public List<int> Run()
     {
-        var list = new List<int>() { 10, 15, 20 };
+        var list = new List<int>() { 10, 20, 30, 40 };
         int i = 10;
         var query = list.Where(x => x >= i);
-        i = 15;
+        i = 25;
         var result = query.ToList();
         list.Clear();
 

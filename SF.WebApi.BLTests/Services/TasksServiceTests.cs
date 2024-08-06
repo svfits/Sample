@@ -15,8 +15,8 @@ public class TasksServiceTests
         var result = tasksService.Run();
 
         //assert
-        Assert.AreEqual(result.First(), 15);
-        Assert.AreEqual(result.Last(), 20);
+        Assert.AreEqual(result.First(), 30);
+        Assert.AreEqual(result.Last(), 40);
     }
 
     [TestMethod("Запуск параллельно")]
