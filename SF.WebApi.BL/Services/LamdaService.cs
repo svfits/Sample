@@ -1,10 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace SF.WebApi.BL.Services;
 
@@ -22,7 +16,6 @@ public class LambdaService : ILambdaService
             a.MyProperty = 8;
             a.MyProperty2 = 7;
             a.MyProperty3 = 6;
-            a.Method(234);
         });
     }
 
@@ -45,8 +38,5 @@ public class MyClass
 
     public int MyProperty3 { get; set; }
 
-    public void Method(int v)
-    {
-        Debug.WriteLine(v);
-    }
+    public static void Method(int v) => Debug.WriteLine(v);
 }
