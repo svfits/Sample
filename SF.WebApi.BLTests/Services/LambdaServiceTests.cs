@@ -28,5 +28,24 @@ public class LambdaServiceTests
         lambdaService.RunFunc();
 
         //assert
+
+        var dtStart = new DateTime(2021, 10, 12);
+        var dtEnd = new DateTime(2024, 8, 22);
+        var result = (dtEnd - dtStart).TotalDays;
+
+    }
+
+    [TestMethod("Сколько дней ипотеки")]
+    public void RangeDays()
+    {
+        //arrange
+        var dtStart = new DateTime(2021, 10, 12);
+        var dtEnd = new DateTime(2024, 8, 22);
+
+        //action
+        var result = (dtEnd - dtStart).TotalDays;
+
+        //assert
+        Assert.AreEqual(1045, result);
     }
 }
