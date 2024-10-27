@@ -75,7 +75,7 @@ public class Program
         builder.Services.AddTransient<IAuthService, AuthService>();
         builder.Services.AddScoped<IScopedService, ScopedService>();
         builder.Services.AddScoped<IKafkaService, KafkaService>();
-                
+
         builder.Services.Configure<KafkaConfig>(builder.Configuration.GetSection("KafkaConfig"));
 
         //Тут можно подключить любую БД
@@ -101,6 +101,6 @@ public class Program
 
         app.UseMiddleware<AuthMiddleWare>();
 
-        app.Run();
+        await app.RunAsync();
     }
 }

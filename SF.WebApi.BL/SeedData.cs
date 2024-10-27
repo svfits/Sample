@@ -19,7 +19,8 @@ public class SeedData
             await db.SaveChangesAsync();
         }
 
-        var isUser = await db!.User.FirstOrDefaultAsync(s => s.TypeUser == TypeUser.User);
+        var isUser = await db!.User
+            .TagWith("Тут выполняется какой то запрос").FirstOrDefaultAsync(s => s.TypeUser == TypeUser.User);
         if (isUser == null)
         {
             await db.User.AddAsync(new User() { Name = "Простой пользователь", TypeUser = TypeUser.User });
