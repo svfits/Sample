@@ -37,12 +37,19 @@ public class TasksService : ITasksService
         }
 
         Task.WaitAll(list.ToArray());
+
+        foreach (var item in list)
+        {
+            item.Start();
+            //Debug.WriteLine($"Запуск параллельно {item.}");
+        }
     }
 
-    private static async Task Start(int i)
+    private static async Task<int> Start(int i)
     {
         Debug.WriteLine("Ждем паузы " + DateTime.Now + " " + i);
         await Task.Delay(2000);
+        return i * 10;
     }
 
     public async Task RunSequentially()
